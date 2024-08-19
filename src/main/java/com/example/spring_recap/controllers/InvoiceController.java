@@ -8,6 +8,7 @@ import com.example.spring_recap.mappers.InvoiceMapper;
 import com.example.spring_recap.persitence.entities.Invoice;
 import com.example.spring_recap.persitence.entities.InvoiceItem;
 import com.example.spring_recap.services.InvoiceService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class InvoiceController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponsePayload<InvoiceDto>> addInvoice(@RequestBody InvoiceDto invoiceDto) {
+    public ResponseEntity<ResponsePayload<InvoiceDto>> addInvoice(@RequestBody @Valid InvoiceDto invoiceDto) {
         Invoice invoice = invoiceService.addInvoice(InvoiceMapper.toEntity(invoiceDto));
         return new ResponseEntity<>(new ResponsePayload<>(
                 InvoiceMapper.toDto(invoice),

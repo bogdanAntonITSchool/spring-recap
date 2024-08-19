@@ -1,6 +1,9 @@
 package com.example.spring_recap.controllers.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -17,5 +20,8 @@ public class InvoiceDto {
 //    @JsonIgnore
     private Double total;
 
-    private List<InvoiceItemDto> items;
+    @Valid
+    @NotNull
+    @Size(min = 1, max = 5)
+    private List<@NotNull InvoiceItemDto> items;
 }
