@@ -19,7 +19,6 @@ public class Invoice {
 
     private Double total;
 
-    @OneToMany(mappedBy = "invoice",
-            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<InvoiceItem> items;
 }

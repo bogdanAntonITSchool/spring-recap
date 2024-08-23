@@ -8,6 +8,9 @@ import com.example.spring_recap.mappers.InvoiceMapper;
 import com.example.spring_recap.persitence.entities.Invoice;
 import com.example.spring_recap.persitence.entities.InvoiceItem;
 import com.example.spring_recap.services.InvoiceService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,8 +35,13 @@ public class InvoiceController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponsePayload<InvoiceDto>> addInvoice(@RequestBody @Valid InvoiceDto invoiceDto) {
+    public ResponseEntity<ResponsePayload<InvoiceDto>> addInvoice(@RequestBody @Valid InvoiceDto invoiceDto,
+                                                                  HttpServletResponse response) {
         Invoice invoice = invoiceService.addInvoice(InvoiceMapper.toEntity(invoiceDto));
+
+        response.setHeader("Bogdan", "Bogdan");
+        response.addCookie(new Cookie("Bogdan", "Bogdan"));
+
         return new ResponseEntity<>(new ResponsePayload<>(
                 InvoiceMapper.toDto(invoice),
                 "Invoice added successfully"

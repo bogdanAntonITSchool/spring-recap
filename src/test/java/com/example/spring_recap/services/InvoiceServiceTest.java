@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -17,21 +18,16 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class InvoiceServiceTest {
 
     @Mock
-    private InvoiceRepository mockedInvoiceRepository;
+    private InvoiceRepository invoiceRepository;
 
+    @InjectMocks
     private InvoiceService invoiceService;
-
-    @BeforeEach
-    void setUp() {
-        invoiceService = new InvoiceService(mockedInvoiceRepository);
-    }
 
     @Test
     void getAllInvoices() {
@@ -46,8 +42,9 @@ class InvoiceServiceTest {
         List<Invoice> invoices = List.of(invoice);
 
         // When
-        when(mockedInvoiceRepository.findAll()).thenReturn(invoices);
-        doReturn(invoices).when(mockedInvoiceRepository).findAll();
+        when(invoiceRepository.findAll()).thenReturn(invoices);
+        //  or
+        //  doReturn(invoices).when(invoiceRepository).findAll();
 
         // Then
         List<Invoice> resultedInvoices = invoiceService.getAllInvoices();
@@ -71,7 +68,7 @@ class InvoiceServiceTest {
         invoice.setTotal(100.0);
 
         // When
-        when(mockedInvoiceRepository.findById(id)).thenReturn(Optional.of(invoice));
+        when(invoiceRepository.findById(id)).thenReturn(Optional.of(invoice));
 
         // Then
         Invoice resultedInvoice = invoiceService.getInvoiceById(id);
@@ -87,7 +84,7 @@ class InvoiceServiceTest {
         // Given
 
         // When
-        when(mockedInvoiceRepository.findById(any(Long.class))).thenReturn(Optional.empty());
+        when(invoiceRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
         // Then
         assertThrows(InvoiceNotFoundException.class,

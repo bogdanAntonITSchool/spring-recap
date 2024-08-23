@@ -2,6 +2,7 @@ package com.example.spring_recap.controllers.advice;
 
 import com.example.spring_recap.controllers.dtos.ResponsePayload;
 import com.example.spring_recap.exceptions.InvoiceNotFoundException;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
